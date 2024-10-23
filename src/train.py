@@ -3,7 +3,7 @@ from pathlib import Path
 import logging
 
 import hydra
-from omegaconf import DictConfig
+from omegaconf import DictConfig, OmegaConf
 import lightning as L
 from lightning.pytorch.loggers import Logger
 from typing import List
@@ -84,6 +84,7 @@ def test(
 @hydra.main(version_base="1.3", config_path="../configs", config_name="train")
 def main(cfg: DictConfig):
     # Set up paths
+    print(OmegaConf.to_yaml(cfg))
     log_dir = Path(cfg.paths.log_dir)
 
     # Set up logger
@@ -92,17 +93,24 @@ def main(cfg: DictConfig):
     # Initialize DataModule
     log.info(f"Instantiating datamodule <{cfg.data._target_}>")
     datamodule: L.LightningDataModule = hydra.utils.instantiate(cfg.data)
+    print("Printing of DataModule")
+    print(OmegaConf.to_yaml(cfg.data))
 
     # Initialize Model
     log.info(f"Instantiating model <{cfg.model._target_}>")
     model: L.LightningModule = hydra.utils.instantiate(cfg.model)
+    print("Printing of ModelConfig")
+    print(OmegaConf.to_yaml(cfg.model))
 
     # Set up callbacks
     callbacks: List[L.Callback] = instantiate_callbacks(cfg.get("callbacks"))
+    print("Printing of CallbackConfigs")
+    print(OmegaConf.to_yaml(cfg.callbacks))
 
     # Set up loggers
     loggers: List[Logger] = instantiate_loggers(cfg.get("logger"))
-
+    print("Printing of LoggerConfig")
+    print(OmegaConf.to_yaml(cfg.logger))
     # Initialize Trainer
     log.info(f"Instantiating trainer <{cfg.trainer._target_}>")
     trainer: L.Trainer = hydra.utils.instantiate(

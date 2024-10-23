@@ -1,0 +1,5 @@
+_target_: src.datamodules.dogbreed_modules.DogBreedImageDataModule
+
+dl_path: ${paths.data_dir}/dogbreed
+num_workers: 0
+batch_size: 32

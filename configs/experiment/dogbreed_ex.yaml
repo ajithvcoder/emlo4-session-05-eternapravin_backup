@@ -4,8 +4,8 @@
 # python train.py experiment=catdog_ex
 
 defaults:
-  - override /data: catdog
-  - override /model: catdog_classifier
+  - override /data: dogbreed_modules
+  - override /model: dogbreed_classifier
   - override /callbacks: default
   - override /logger: default
   - override /trainer: default
@@ -18,7 +18,6 @@ seed: 42
 data:
   batch_size: 64
   num_workers: 0
-  pin_memory: True
 
 model:
   base_model: "resnet18"
