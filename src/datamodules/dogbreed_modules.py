@@ -6,6 +6,7 @@ from torch.utils.data import DataLoader
 from torchvision import transforms
 from torchvision.datasets import ImageFolder
 from torchvision.datasets.utils import download_and_extract_archive
+from torchvision.datasets.utils import *
 
 class DogBreedImageDataModule(L.LightningDataModule):
     def __init__(self, dl_path: Union[str, Path] = "data", num_workers: int = 0, batch_size: int = 8):
@@ -17,6 +18,7 @@ class DogBreedImageDataModule(L.LightningDataModule):
     def prepare_data(self):
         """Download images and prepare images datasets."""
         print("val",self.data_path.joinpath("val"))
+        
         download_and_extract_archive(
             url="https://drive.google.com/file/d/1aa3sMvNkopVhbK2ISrg5A2kI8yWJrlp5/view?usp=sharing",
             # url=f"https://drive.google.com/uc?id=1By9UUbUAyiTJ2LpX3jlsRXmYOEbMbuO8",
