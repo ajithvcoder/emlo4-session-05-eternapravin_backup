@@ -51,7 +51,7 @@ def instantiate_loggers(logger_cfg: DictConfig) -> List[Logger]:
 def train(
     cfg: DictConfig,
     trainer: L.Trainer,
-    model: L.LightningModule,
+    model: L.LightningModule, 
     datamodule: L.LightningDataModule,
 ):
     log.info("Starting training!")
