@@ -1,0 +1,37 @@
+defaults:
+  - _self_
+  - model: dogbreed_classifier
+  - paths: default
+  - hydra: default
+
+task_name: infer
+
+paths:
+  root_dir: /app
+  output_dir: ${paths.root_dir}/outputs
+
+ckpt_path: ${paths.output_dir}/checkpoints/last.ckpt
+num_images: 10 # Number of images to process
+
+# Define input and output folders
+input_folder: ${paths.root_dir}/infer_images
+output_folder: ${paths.root_dir}/infer_results
+
+# List of class names (dog breeds) in the order of model's output
+class_names:
+  - Labrador Retriever
+  - German Shepherd
+  - Golden Retriever
+  - Bulldog
+  - Beagle
+  # Add more breed names as needed
+
+num_classes: 120  # or whatever number of classes you have
+model: ${model/dogbreed_classifier}
+
+hydra:
+  run:
+    dir: ${paths.log_dir}/runs/${now:%Y-%m-%d}_${now:%H-%M-%S}
+  sweep:
+    dir: ${paths.log_dir}/multiruns/${now:%Y-%m-%d}_${now:%H-%M-%S}
+    subdir: ${hydra.job.num}
