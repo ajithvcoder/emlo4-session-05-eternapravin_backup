@@ -1,4 +1,0 @@
-base_model: resnet18
-num_classes: 10
-lr: 0.001
-pretrained: true
