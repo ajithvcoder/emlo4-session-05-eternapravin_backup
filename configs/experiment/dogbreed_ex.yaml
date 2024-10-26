@@ -1,7 +1,7 @@
 # @package _global_
 
 # to execute this experiment run:
-# python train.py experiment=catdog_ex
+# python train.py experiment=dogbreed_ex
 
 defaults:
   - override /data: dogbreed_modules
