@@ -72,6 +72,7 @@ def test(
         log.info(
             f"Loading best checkpoint: {trainer.checkpoint_callback.best_model_path}"
         )
+
         test_metrics = trainer.test(
             model, datamodule, ckpt_path=trainer.checkpoint_callback.best_model_path
         )
