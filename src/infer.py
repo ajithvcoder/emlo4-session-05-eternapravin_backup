@@ -74,18 +74,30 @@ def infer_task(
     datamodule: L.LightningDataModule
 ):
     log.info("Starting testing!")
-    if cfg.callbacks.model_checkpoint.dirpath.filename:
+    if cfg.callbacks.model_checkpoint.filename:
         log.info(
-            f"Loading best checkpoint: {cfg.callbacks.model_checkpoint.dirpath.filename}"
+            f"Loading best checkpoint: {cfg.callbacks.model_checkpoint.filename}"
         )
-        print(f"Checkpoint file: {cfg.callbacks.model_checkpoint.dirpath.filename}")
+        print(f"Checkpoint file: {cfg.callbacks.model_checkpoint.filename}")
         output = trainer.predict(
-            model, datamodule, ckpt_path=cfg.callbacks.model_checkpoint.dirpath.filename
+            model, datamodule, ckpt_path=cfg.callbacks.model_checkpoint.filename
         )
         print(f"Output: {output}")
     else:
         log.warning("No checkpoint found! Using current model weights.")
-        output = trainer.predict(model, datamodule, ckpt_path=cfg.callbacks.model_checkpoint.dirpath.filename)
+        output = trainer.predict(model, datamodule, ckpt_path=cfg.callbacks.model_checkpoint.filename)
+    '''if cfg.callbacks.model_checkpoint.filename:
+        log.info(
+            f"Loading best checkpoint: {trainer.checkpoint_callback.best_model_path}"
+        )
+        print(f"Checkpoint file: {trainer.checkpoint_callback.best_model_path}")
+        output = trainer.predict(
+            model, datamodule, ckpt_path=trainer.checkpoint_callback.best_model_path
+        )
+        print(f"Output: {output}")
+    else:
+        log.warning("No checkpoint found! Using current model weights.")
+        output = trainer.predict(model, datamodule, ckpt_path=trainer.checkpoint_callback.best_model_path)'''
     print(f"Start annotating images")
     annotate_images(output, cfg.data.classes, "./infer_images")
 

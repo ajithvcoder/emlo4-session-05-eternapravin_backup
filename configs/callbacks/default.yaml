@@ -6,9 +6,9 @@ defaults:
   - _self_
 
 model_checkpoint:
-  dirpath: /workspace/data/dogbreed/checkpoint
+  dirpath: 
   #${paths.output_dir}/checkpoints
-  filename: "epoch_001"
+  filename: "/workspace/data/dogbreed/checkpoint/epoch_001"
   monitor: "val_acc"
   mode: "max"
   save_last: True
