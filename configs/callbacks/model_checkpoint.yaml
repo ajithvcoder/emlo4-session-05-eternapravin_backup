@@ -3,6 +3,7 @@
 model_checkpoint:
   _target_: lightning.pytorch.callbacks.ModelCheckpoint
   dirpath: /workspace/checkpoints/epoch_best.ckpt
+  #dir_path: ${paths.root_dir}/checkpoints/epoch_best.ckpt
   filename: null # checkpoint filename
   monitor: null # name of the logged metric which determines when model is improving
   verbose: False # verbosity mode

@@ -37,7 +37,12 @@ def main(cfg: DictConfig) -> None:
     log.info(f"Instantiating model <{cfg.model._target_}>")
     model: torch.nn.Module = hydra.utils.instantiate(cfg.model)
 
+    '''if not os.path.exists(cfg.ckpt_path):
+        log.error(f"Checkpoint file does not exist at: {cfg.ckpt_path}")
+    return'''
     log.info(f"Loading model checkpoint: {cfg.ckpt_path}")
+    print(f"Resolved Checkpoint Path: {cfg.ckpt_path}")
+
     checkpoint = torch.load(cfg.ckpt_path, map_location=torch.device('cpu'), weights_only=True)
     model.load_state_dict(checkpoint['state_dict'])
     model.eval()
@@ -47,7 +52,7 @@ def main(cfg: DictConfig) -> None:
 
     log.info("Starting inference...")
     # Your inference logic here
-    # process_images(cfg, model)
+    process_images(cfg, model)
 
     log.info("Inference completed.")
 

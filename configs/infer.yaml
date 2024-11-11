@@ -15,7 +15,8 @@ paths:
   root_dir:${oc.env:PROJECT_ROOT,${hydra:runtime.cwd}}
   #output_dir: ${paths.root_dir}/infer_results
 
-ckpt_path: /workspace/checkpoints/epoch_best.ckpt
+#ckpt_path: /workspace/checkpoints/epoch_best.ckpt
+ckpt_path: ${paths.root_dir}/checkpoints/epoch_best.ckpt
 num_images: ${num_classes} # Number of images to process
 
 # Define input and output folders
@@ -31,7 +32,7 @@ class_names:
   - Beagle
   # Add more breed names as needed
 
-num_classes: 120  # or whatever number of classes you have
+num_classes: ${num_classes}  # or whatever number of classes you have
 model: ${model/dogbreed_classifier}
 
 hydra:
