@@ -34,7 +34,7 @@ callbacks:
     mode: "max"
     save_top_k: 1
     save_last: True
-
+    filename: "checkpoints/epoch_best"
   early_stopping:
     monitor: "val_acc"
     patience: 10

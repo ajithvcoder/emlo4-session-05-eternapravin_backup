@@ -1,13 +1,13 @@
 defaults:
+
   - _self_
-  - data: dogbreed_modules
+
   - model: dogbreed_classifier
-  - logger: default
+
   - paths: default
-  - trainer: default
+
   - hydra: default
-  - callbacks: default
-  - debug: null
+
 
 task_name: infer
 
@@ -15,8 +15,7 @@ paths:
   root_dir:${oc.env:PROJECT_ROOT,${hydra:runtime.cwd}}
   #output_dir: ${paths.root_dir}/infer_results
 
-ckpt_path: ${paths.output_dir}/checkpoints/epoch_001.ckpt
-#ckpt_path: /app/logs/train/runs/2024-10-26_05-18-30/checkpoints/epoch_001.ckpt
+ckpt_path: /workspace/checkpoints/epoch_best.ckpt
 num_images: ${num_classes} # Number of images to process
 
 # Define input and output folders

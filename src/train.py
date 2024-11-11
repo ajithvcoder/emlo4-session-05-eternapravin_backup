@@ -7,6 +7,8 @@ from omegaconf import DictConfig, OmegaConf
 import lightning as L
 from lightning.pytorch.loggers import Logger
 from typing import List
+from lightning.pytorch.callbacks import ModelCheckpoint
+from typing import Any, Dict
 
 import rootutils
 
@@ -46,6 +48,26 @@ def instantiate_loggers(logger_cfg: DictConfig) -> List[Logger]:
 
     return loggers
 
+class CustomModelCheckpoint(ModelCheckpoint):
+    def __init__(self, custom_dir: str = "/checkpoints/", **kwargs):
+        # Ensure the custom directory exists
+        os.makedirs(custom_dir, exist_ok=True)
+
+        # Pass the custom directory and additional parameters to the base class
+        super().__init__(dirpath=custom_dir, **kwargs)
+
+    def save_checkpoint(self, trainer: L.Trainer, pl_module: L.LightningModule) -> None:
+        """Override this method if you want to customize the saving logic further."""
+        # You can add custom logic here if needed
+        print(f"Saving checkpoint to: {self.dirpath}")
+        super().save_checkpoint(trainer, pl_module)
+
+    def format_checkpoint_name(self, epoch, step, metrics):
+        """Custom formatting for checkpoint filenames."""
+        # Example filename: 'custom-epoch=001-step=1000.ckpt'
+        #filename = f"custom-epoch={epoch:03d}-step={step}.ckpt"
+        filename = f"epoch_best"
+        return filename
 
 @task_wrapper
 def train(
@@ -72,7 +94,6 @@ def test(
         log.info(
             f"Loading best checkpoint: {trainer.checkpoint_callback.best_model_path}"
         )
-
         test_metrics = trainer.test(
             model, datamodule, ckpt_path=trainer.checkpoint_callback.best_model_path
         )
