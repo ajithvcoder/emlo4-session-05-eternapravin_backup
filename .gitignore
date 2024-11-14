@@ -168,3 +168,4 @@ cython_debug/
 /samples/
 bin
 /output_dir/
+/checkpoints/
